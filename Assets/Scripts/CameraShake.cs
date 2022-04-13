@@ -1,5 +1,5 @@
+// Reference: https://www.youtube.com/watch?v=9A9yj8KnM8c
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraShake : MonoBehaviour

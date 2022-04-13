@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public CameraShake cameraShake;
     public float cameraShakeDuration = 0.25f;
     public float cameraShakeMagnitude = 0.4f;
+    public GameObject hitParticleGO;
+    public GameObject sparkShowerParticleGO;
+    public Transform sparkShowerParent;
 
     private void Awake()
     {
@@ -63,5 +66,17 @@ public class GameManager : MonoBehaviour
     public void ShakeCamera()
     {
         StartCoroutine(cameraShake.Shake(cameraShakeDuration, cameraShakeMagnitude));
+    }
+
+    public void PlayHitParticleEffect(Transform parent)
+    {
+        GameObject hitParticle = Instantiate(hitParticleGO, parent);
+        Destroy(hitParticle, 0.5f);
+    }
+
+    public void PlaySparkShowerParticleEffect()
+    {
+        GameObject spark = Instantiate(sparkShowerParticleGO, sparkShowerParent);
+        //Destroy(spark, 0.6f);
     }
 }

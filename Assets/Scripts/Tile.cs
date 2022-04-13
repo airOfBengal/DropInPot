@@ -6,6 +6,7 @@ public class Tile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameManager.instance.PlayHitParticleEffect(transform);
         GameManager.instance.ShakeCamera();
 
         Debug.Log("Ball collide with tile");
