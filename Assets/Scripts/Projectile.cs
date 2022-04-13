@@ -62,8 +62,7 @@ public class Projectile : MonoBehaviour
             float moveCursorX = startTouchPos.x - movedTouchPos.x;
             cursor.transform.position = new Vector3(moveCursorX, cursor.transform.position.y, (GameManager.instance.ball.transform.position.z + 1) + touchChangedZ * zDelta);
             LaunchProjectile();
-        }
-        //
+        } 
     }
 
     void LaunchProjectile()
@@ -93,18 +92,6 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    //added final position argument to draw the last line node to the actual target
-    void Visualize(Vector3 vo, Vector3 finalPos)
-    {
-        for (int i = 0; i < lineSegment; i++)
-        {
-            Vector3 pos = CalculatePosInTime(vo, (i / (float)lineSegment) * flightTime);
-            lineVisual.SetPosition(i, pos);
-        }
-
-        lineVisual.SetPosition(lineSegment, finalPos);
-    }
-
     Vector3 CalculateVelocty(Vector3 target, Vector3 origin, float time)
     {
         Vector3 distance = target - origin;
@@ -122,6 +109,18 @@ public class Projectile : MonoBehaviour
         result.y = Vy;
 
         return result;
+    }
+
+    //added final position argument to draw the last line node to the actual target
+    void Visualize(Vector3 vo, Vector3 finalPos)
+    {
+        for (int i = 0; i < lineSegment; i++)
+        {
+            Vector3 pos = CalculatePosInTime(vo, (i / (float)lineSegment) * flightTime);
+            lineVisual.SetPosition(i, pos);
+        }
+
+        lineVisual.SetPosition(lineSegment, finalPos);
     }
 
     Vector3 CalculatePosInTime(Vector3 vo, float time)

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Tile
   - Pot
+  - MovingTile
+  - Ball
   layers:
   - Default
   - TransparentFX

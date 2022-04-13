@@ -4,14 +4,18 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    public List<GameObject> droppableObjects;
+    private List<GameObject> droppableObjects;
     public GameObject ball;
     public GameObject pot;
     public float forceToBall = 10f;
-    public bool isBallKinematic = false;
+    private int droppableObjectCount;
+    private int objectsDropped;
+    public UIManager uiManager;
+    public LevelManager levelManager;
 
     private void Awake()
     {
+        Init();
         if(instance == null)
         {
             instance = this;
@@ -22,32 +26,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Init()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    Vector3 targetPos = GetNearestTile(ball).transform.position;
-        //    Arc arc = ball.GetComponent<Arc>();
-        //    float travelDuration = 1f / forceToBall;
-        //    StartCoroutine(arc.TravelArc(targetPos, travelDuration));
-        //}
+        ball = GameObject.FindGameObjectWithTag("Ball");
+        pot = GameObject.FindGameObjectWithTag("Pot");
+        droppableObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Tile"));
+        for(int i = 1; i < droppableObjects.Count; i++)
+        {
+            Tile tile = droppableObjects[i - 1].GetComponent<Tile>();
+            tile.nextTileGO = droppableObjects[i];
+        }
+        droppableObjectCount = droppableObjects.Count + 1; // 1 is for pot
+        objectsDropped = 0;
+
+        uiManager.leftLabelText.text = levelManager.GetCurrentLevelNo().ToString();
+        uiManager.rightLabelText.text = levelManager.GetNextLevelNo().ToString();
     }
 
-    public GameObject GetNearestTile(GameObject source)
+    void Update()
     {
-        droppableObjects.Remove(source);
-        float minDistance = float.MaxValue;
-        GameObject target = null;
-        foreach(GameObject go in droppableObjects)
-        {
-            float distance = Vector3.Distance(source.transform.position, go.transform.position);
-            if (distance < minDistance)
-            {
-                target = go;
-                minDistance = distance;
-            }
-        }
-        return target;
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
+
+    public void UpdateProgress()
+    {
+        objectsDropped++;
+        float progress = objectsDropped / (float)droppableObjectCount;
+        //Debug.Log("progress: " + progress.ToString("0.00"));
+        uiManager.progressImage.fillAmount = progress;
     }
 }
