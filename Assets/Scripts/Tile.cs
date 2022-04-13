@@ -6,6 +6,8 @@ public class Tile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameManager.instance.ShakeCamera();
+
         Debug.Log("Ball collide with tile");
         GameObject target = nextTileGO;
         if(target == null)

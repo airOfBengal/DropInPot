@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     private int objectsDropped;
     public UIManager uiManager;
     public LevelManager levelManager;
+    public CameraShake cameraShake;
+    public float cameraShakeDuration = 0.25f;
+    public float cameraShakeMagnitude = 0.4f;
 
     private void Awake()
     {
@@ -55,5 +58,10 @@ public class GameManager : MonoBehaviour
         float progress = objectsDropped / (float)droppableObjectCount;
         //Debug.Log("progress: " + progress.ToString("0.00"));
         uiManager.progressImage.fillAmount = progress;
+    }
+
+    public void ShakeCamera()
+    {
+        StartCoroutine(cameraShake.Shake(cameraShakeDuration, cameraShakeMagnitude));
     }
 }
