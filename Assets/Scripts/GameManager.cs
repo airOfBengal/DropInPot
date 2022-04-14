@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +20,7 @@ public class GameManager : MonoBehaviour
     public GameObject hitParticleGO;
     public GameObject sparkShowerParticleGO;
     public Transform sparkShowerParent;
+    public float progress;
 
     private void Awake()
     {
@@ -52,14 +55,16 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
-            Application.Quit();
+        {
+            levelManager.ExitApp();
+        }
     }
 
     public void UpdateProgress()
     {
         objectsDropped++;
-        float progress = objectsDropped / (float)droppableObjectCount;
-        //Debug.Log("progress: " + progress.ToString("0.00"));
+        progress = objectsDropped / (float)droppableObjectCount;
+        Debug.Log("progress: " + progress.ToString("0.00"));
         uiManager.progressImage.fillAmount = progress;
     }
 
@@ -78,5 +83,26 @@ public class GameManager : MonoBehaviour
     {
         GameObject spark = Instantiate(sparkShowerParticleGO, sparkShowerParent);
         //Destroy(spark, 0.6f);
+    }
+
+    public void SetGameOverPanelActive()
+    {
+        uiManager.gameOverPanel.SetActive(true);
+    }
+
+    public void SetGameOverPanelDeactive()
+    {
+        uiManager.gameOverPanel.SetActive(false);
+    }
+
+    public void LoadNextLevel()
+    {
+        StartCoroutine(LoadNextLevelCoroutine());
+    }
+
+    IEnumerator LoadNextLevelCoroutine()
+    {
+        yield return new WaitForSeconds(0.6f);
+        levelManager.LoadNextLevel();
     }
 }

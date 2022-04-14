@@ -8,6 +8,8 @@ public class Ball : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
             Debug.Log("collide with plane");
+            Destroy(gameObject, 0.2f);
+            GameManager.instance.SetGameOverPanelActive();
         }
     }
 }

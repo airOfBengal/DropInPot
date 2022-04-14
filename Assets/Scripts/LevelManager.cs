@@ -14,11 +14,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartGame()
     {
+        GameManager.instance.SetGameOverPanelDeactive();
         SceneManager.LoadScene(0);
     }
 
     public void RestartLevel()
     {
+        GameManager.instance.SetGameOverPanelDeactive();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -35,5 +37,10 @@ public class LevelManager : MonoBehaviour
     public int GetNextLevelNo()
     {
         return ((SceneManager.GetActiveScene().buildIndex + 1) % totalLevel) + 1;
+    }
+
+    public void ExitApp()
+    {
+        Application.Quit();
     }
 }
