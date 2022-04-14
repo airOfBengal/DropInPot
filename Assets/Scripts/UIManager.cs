@@ -7,4 +7,5 @@ public class UIManager : MonoBehaviour
     public Text rightLabelText;
     public Image progressImage;
     public GameObject gameOverPanel;
+    public GameObject congratsGO;
 }

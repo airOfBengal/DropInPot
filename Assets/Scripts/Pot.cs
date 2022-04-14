@@ -13,11 +13,19 @@ public class Pot : MonoBehaviour
 
         if (GameManager.instance.progress < 1.0f)
         {
-            GameManager.instance.SetGameOverPanelActive();
+            GameManager.instance.uiManager.gameOverPanel.SetActive(true);
             return;
         }
 
         GameManager.instance.PlaySparkShowerParticleEffect();
+
+        if (GameManager.instance.levelManager.GetCurrentLevelNo() == GameManager.instance.levelManager.totalLevel)
+        {
+            GameManager.instance.uiManager.gameOverPanel.SetActive(true);
+            GameManager.instance.uiManager.congratsGO.SetActive(true);
+            return;
+        }
+
         GameManager.instance.LoadNextLevel();
     }
 }

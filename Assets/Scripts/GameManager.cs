@@ -85,16 +85,6 @@ public class GameManager : MonoBehaviour
         //Destroy(spark, 0.6f);
     }
 
-    public void SetGameOverPanelActive()
-    {
-        uiManager.gameOverPanel.SetActive(true);
-    }
-
-    public void SetGameOverPanelDeactive()
-    {
-        uiManager.gameOverPanel.SetActive(false);
-    }
-
     public void LoadNextLevel()
     {
         StartCoroutine(LoadNextLevelCoroutine());

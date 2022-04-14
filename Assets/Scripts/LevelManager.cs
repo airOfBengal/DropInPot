@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    private int totalLevel;
+    public int totalLevel;
 
     private void Awake()
     {
@@ -14,13 +14,13 @@ public class LevelManager : MonoBehaviour
 
     public void RestartGame()
     {
-        GameManager.instance.SetGameOverPanelDeactive();
+        GameManager.instance.uiManager.gameOverPanel.SetActive(false);
         SceneManager.LoadScene(0);
     }
 
     public void RestartLevel()
     {
-        GameManager.instance.SetGameOverPanelDeactive();
+        GameManager.instance.uiManager.gameOverPanel.SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
