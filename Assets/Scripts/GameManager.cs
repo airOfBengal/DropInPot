@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private List<GameObject> droppableObjects;
+    public List<GameObject> droppableObjects;
     public GameObject ball;
     public GameObject pot;
     public float forceToBall = 10f;
@@ -37,10 +37,10 @@ public class GameManager : MonoBehaviour
 
     private void Init()
     {
-        ball = GameObject.FindGameObjectWithTag("Ball");
-        pot = GameObject.FindGameObjectWithTag("Pot");
-        droppableObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Tile"));
-        for(int i = 1; i < droppableObjects.Count; i++)
+        //ball = GameObject.FindGameObjectWithTag("Ball");
+        //pot = GameObject.FindGameObjectWithTag("Pot");
+        //droppableObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Tile"));
+        for (int i = 1; i < droppableObjects.Count; i++)
         {
             Tile tile = droppableObjects[i - 1].GetComponent<Tile>();
             tile.nextTileGO = droppableObjects[i];
