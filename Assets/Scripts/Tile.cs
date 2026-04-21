@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
             GameManager.instance.PlayHitParticleEffect(transform);
             GameManager.instance.ShakeCamera();
 
-            Debug.Log("Ball collide with tile " + gameObject.name);
+            // Debug.Log("Ball collide with tile " + gameObject.name);
             GameObject target = nextTileGO;
             if (target == null)
             {

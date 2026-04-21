@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+#if UNITY_ANDROID        
         if (Input.touchCount > 0)
         {
             
@@ -39,9 +40,7 @@ public class Projectile : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    cursor.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, GameManager.instance.ball.transform.position.z + 1);
-                    lineVisualGO.SetActive(true);
-                    startTouchPos = cam.ScreenToWorldPoint(touch.position);
+                    StartAiming(touch.position);
                     break;
                 case TouchPhase.Moved:
                     movedTouchPos = cam.ScreenToWorldPoint(touch.position);
@@ -49,8 +48,7 @@ public class Projectile : MonoBehaviour
                 case TouchPhase.Stationary:
                     break;
                 case TouchPhase.Ended:
-                    lineVisualGO.SetActive(false);
-                    touchEnded = true;
+                    EndAiming();
                     break;
                 case TouchPhase.Canceled:
                     break;
@@ -58,11 +56,48 @@ public class Projectile : MonoBehaviour
                     break;
             }
 
-            touchChangedZ = Mathf.Abs(movedTouchPos.z - startTouchPos.z);
-            float moveCursorX = startTouchPos.x - movedTouchPos.x;
-            cursor.transform.position = new Vector3(moveCursorX, cursor.transform.position.y, (GameManager.instance.ball.transform.position.z + 1) + touchChangedZ * zDelta);
+            CalculateProjectile();
             LaunchProjectile();
         } 
+#elif UNITY_WEBGL || UNITY_EDITOR
+        // mouse input
+        if(Input.GetMouseButtonDown(0))
+        {
+            StartAiming(Input.mousePosition);
+        }
+        if(Input.GetMouseButton(0))
+        {
+                     
+        }
+        if(Input.GetMouseButtonUp(0))
+        {
+            EndAiming();   
+            LaunchProjectile();         
+        }
+
+        movedTouchPos = cam.ScreenToWorldPoint(Input.mousePosition);  
+        CalculateProjectile(); 
+#endif
+    }
+
+    private void StartAiming(Vector3 touchPosition)
+    {
+        cursor.transform.position = new Vector3(cursor.transform.position.x, cursor.transform.position.y, GameManager.instance.ball.transform.position.z + 1);
+        lineVisualGO.SetActive(true);
+        startTouchPos = cam.ScreenToWorldPoint(touchPosition);
+    }
+
+    private void EndAiming()
+    {
+        lineVisualGO.SetActive(false);
+        touchEnded = true;
+    }
+
+    private void CalculateProjectile()
+    {
+        touchChangedZ = Mathf.Abs(movedTouchPos.z - startTouchPos.z);
+        float moveCursorX = startTouchPos.x - movedTouchPos.x;
+        cursor.transform.position = new Vector3(moveCursorX, cursor.transform.position.y, (GameManager.instance.ball.transform.position.z + 1) + touchChangedZ * zDelta);        
     }
 
     void LaunchProjectile()
@@ -87,7 +122,7 @@ public class Projectile : MonoBehaviour
             {
                 Rigidbody obj = GameManager.instance.ball.GetComponent<Rigidbody>(); //Instantiate(projectile, shootPoint.position, Quaternion.identity);
                 obj.useGravity = true;
-                obj.velocity = vo;
+                obj.linearVelocity = vo;
             }
         }
     }

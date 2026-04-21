@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
         if (collision.gameObject.name == "Plane")
         {
             gameObject.GetComponent<Rigidbody>().isKinematic = true;
-            Debug.Log("collide with plane");
+            // Debug.Log("collide with plane");
             Destroy(gameObject, 0.2f);
             GameManager.instance.uiManager.gameOverPanel.SetActive(true);
         }

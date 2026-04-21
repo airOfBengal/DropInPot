@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     {
         objectsDropped++;
         progress = objectsDropped / (float)droppableObjectCount;
-        Debug.Log("progress: " + progress.ToString("0.00"));
+        // Debug.Log("progress: " + progress.ToString("0.00"));
         uiManager.progressImage.fillAmount = progress;
     }
 
